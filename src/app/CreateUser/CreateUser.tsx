@@ -1,68 +1,61 @@
-'use client';
-import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
-import { useState } from "react";
-
-interface User {
-    id: number;
-    name: string;
-    email: string;
-    phone: string;
-}
+"use client";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRef } from "react";
+import { usersApi } from "../users/api";
+import {  UpdateUserPayload, User } from "../types/user";
 
 export default function CreateUser() {
-    async function createUser(user: any) {
-        const res = await axios.post('http://localhost:5000/users', user, {
+  const queryClient = useQueryClient();
+  const phoneRef = useRef<HTMLInputElement>(null);
+  const nameRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const createUserMutation = useMutation<User, Error, UpdateUserPayload>({
+    mutationFn: usersApi.createUser,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["users"] });
+    },
+  });
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const payload: UpdateUserPayload = {
+      id: Date.now(),
+      name: formData.get("name") as string,
+      email: formData.get("email") as string,
+      phone: formData.get("phone") as string,
+    };
+    createUserMutation.mutate(payload);
+    form.reset();
+  }
 
-            headers:{
-                'Content-Type': 'application/json'
-            }
-        })
-        return res.data;
-    }
-
-    const mutation = useMutation<User, Error, User>({
-        mutationFn: createUser,
-        
-        onSuccess: (data) => {
-            console.log('User created successfully', data);
-        },
-        onError: (error) => {
-            console.error('Error creating user', error);
-        }
-    })
-      const [userData, setUserData] = useState<User>({
-        id: 0,
-        name: '',
-        email: '',
-        phone: '',
-    });
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setUserData((prevUser) => ({
-            ...prevUser,
-            [name]: value,
-            id: prevUser.id + 1
-        }));
-    }
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) =>{
-        e.preventDefault();
-        mutation.mutate(userData);
-    }
-
-
-    return (
-        <div>
-            <form action="" onSubmit={handleSubmit}>
-                <input type="text" name="name" placeholder="Name" value={userData.name} onChange={handleChange} />
-                <input type="email" name="email" placeholder="Email" value={userData.email} onChange={handleChange} />
-                <input type="text" name="phone" placeholder="Phone" value={userData.phone} onChange={handleChange} />
-                
-                <button type="submit" disabled={mutation.isPending}>
-                    {mutation.isPending ? 'Creating...' : 'Create User'}
-                </button>
-            </form>
-        </div>
-    );
+  return (
+    <div>
+      <h1>Создать юзера</h1>
+      <form onSubmit={handleSubmit}>
+        <label>Телефон</label>
+        <input
+          type="text"
+          name="phone"
+          placeholder="Введите телефон"
+          ref={phoneRef}
+        />
+        <label>Имя</label>
+        <input
+          type="text"
+          name="name"
+          placeholder="Введите имя"
+          ref={nameRef}
+        />
+        <label>Email</label>
+        <input
+          type="email"
+          name="email"
+          placeholder="Введите email"
+          ref={emailRef}
+        />
+        <button type="submit">Создать</button>
+      </form>
+    </div>
+  );
 }

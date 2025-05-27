@@ -1,0 +1,98 @@
+{
+  "users": [
+    {
+      "name": "21322",
+      "phone": "89514569504",
+      "email": "312@gm",
+      "id": "1",
+      "phrase": "aboba"
+    },
+    {
+      "id": "2",
+      "name": "User 2",
+      "email": "user2@example.com",
+      "phone": 1000000002,
+      "phrase": "bebra"
+    },
+    {
+      "id": "3",
+      "name": "User 3",
+      "email": "user3@example.com",
+      "phone": 1000000003,
+      "phrase": "pickme"
+    },
+    {
+      "id": "4",
+      "name": "User 4",
+      "email": "user4@example.com",
+      "phone": 1000000004,
+      "phrase": "nike pro"
+    },
+    {
+      "id": "5",
+      "name": "User 5",
+      "email": "user5@example.com",
+      "phone": 1000000005,
+      "phrase": "shovel"
+    }
+  ],
+  "posts": [
+    {
+      "id": "1",
+      "title": "Post 1",
+      "content": "Content of post 1",
+      "authorId": "1"
+    },
+    {
+      "id": "2",
+      "title": "Post 2",
+      "content": "Content of post 2",
+      "authorId": "2"
+    },
+    {
+      "id": "3",
+      "title": "Post 3",
+      "content": "Content of post 3",
+      "authorId": "3"
+    }
+  ],
+  "products": [
+    {
+      "id": "1",
+      "name": "Product 1",
+      "description": "Description of product 1",
+      "price": 10.99,
+      "quantity": 3
+    },
+    {
+      "id": "2",
+      "name": "Product 2",
+      "description": "Description of product 2",
+      "price": 19.99,
+      "quantity": 5
+    },
+    {
+      "id": "3",
+      "name": "Product 3",
+      "description": "Description of product 3",
+      "price": 9.99,
+      "quantity": 1
+    },
+    {
+      "id": "4",
+      "name": "Product 4",
+      "description": "Description of product 4",
+      "price": 29.99,
+      "quantity": 6
+    }
+  ],
+  "cart": [
+    {
+      "id": "1",
+      "name": "Product 1",
+      "description": "Description of product 1",
+      "price": 10.99,
+      "quantity": 1
+    }
+  ]
+}
